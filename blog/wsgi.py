@@ -8,7 +8,8 @@ from django.core.wsgi import get_wsgi_application
 path = '/var/www' 
 if path not in sys.path: 
     sys.path.insert(0, '/var/www/testsite') 
-    sys.path.append('/var/www/testsite/blog/') 
+    sys.path.append('/var/www/testsite/blog/')
+    #sys.path.append('/var/www/testsite/blog/chat/')
 
 os.environ['PYTHON_EGG_CACHE'] = '/tmp'
 

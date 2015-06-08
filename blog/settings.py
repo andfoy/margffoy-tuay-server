@@ -184,6 +184,8 @@ USE_TZ = True
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en"
 
+LC_ALL = 'en_US.UTF8'
+
 # Supported languages
 _ = lambda s: s
 LANGUAGES = (
@@ -314,6 +316,7 @@ INSTALLED_APPS = (
     "mezzanine.forms",
     "mezzanine.galleries",
     "mezzanine.twitter",
+    "chat",
     #"polls",
     # "mezzanine.accounts",
     # "mezzanine.mobile",
