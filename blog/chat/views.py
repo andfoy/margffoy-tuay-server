@@ -1,33 +1,29 @@
-from .models import Comments, User
-
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseServerError
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.sessions.models import Session
-from django.contrib.auth.decorators import login_required
-
 import redis
+from django.shortcuts import render
+from django.http import HttpResponse
 
-@login_required
 def home_chat(request):
-  comments = Comments.objects.select_related().all()[0:100]
-  return render(request, 'chat/index.html', locals())
+    #csrf_token = csrf(request)
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+    user = request.user
+    username = 'Someone'
+    if user.is_authenticated():
+       username = user.username
+    r.set('user', username)
+    return render(request, 'chat/index.html', locals())
 
-@csrf_exempt
-def node_api(request):
-  try:
-      #Get User from sessionid
-      session = Session.objects.get(session_key=request.POST.get('sessionid'))
-      user_id = session.get_decoded().get('_auth_user_id')
-      user = User.objects.get(id=user_id)
-
-      #Create comment
-      Comments.objects.create(user=user, text=request.POST.get('comment'))
-      
-      #Once comment has been created post it to the chat channel
-      r = redis.StrictRedis(host='localhost', port=6379, db=0)
-      r.publish('chat', user.username + ': ' + request.POST.get('comment'))
-      
-      return HttpResponse("Everything worked :)")
-  except Exception, e:
-      return HttpResponseServerError(str(e))
+def process_message(request):
+    if request.method == 'POST':
+       r = redis.StrictRedis(host='localhost', port=6379, db=0)
+       r.set('msg', 'Trying...')
+       user = request.user
+       username = 'Someone'
+       if user.is_authenticated():
+          username = user.username
+       msg = request.POST.get('msg')
+       data = '%s : %s' % (username, msg)
+       r.publish('chat-channel', data)
+       #r.set('msg', data)
+       return HttpResponse("200 OK")
+    else:
+       return HttpResponse("Not Allowed")

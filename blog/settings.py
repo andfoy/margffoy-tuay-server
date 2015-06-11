@@ -1,6 +1,15 @@
 from __future__ import absolute_import, unicode_literals
 import os
 
+
+########################
+# SWAMPDRAGON SETTINGS #
+########################
+
+SWAMP_DRAGON_CONNECTION = ('swampdragon.connections.sockjs_connection.DjangoSubscriberConnection', '/data')
+
+DRAGON_URL = 'http://margffoy-tuay.com:9999/'
+
 ######################
 # CARTRIDGE SETTINGS #
 ######################
@@ -316,6 +325,7 @@ INSTALLED_APPS = (
     "mezzanine.forms",
     "mezzanine.galleries",
     "mezzanine.twitter",
+    'swampdragon',
     "chat",
     #"polls",
     # "mezzanine.accounts",
@@ -438,3 +448,4 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+

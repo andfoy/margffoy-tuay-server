@@ -1,10 +1,16 @@
-
 from django.db import models
-from django.contrib.auth.models import User
-
-class Comments(models.Model):
-   user = models.ForeignKey(User)
-   text = models.CharField(max_length=255)
+from swampdragon.models import SelfPublishModel
+from serializers import TodoListSerializer, TodoItemSerializer
 
 
+class TodoList(SelfPublishModel, models.Model):
+    serializer_class = TodoListSerializer
+    name = models.CharField(max_length=100)
+    description = models.TextField()
 
+
+class TodoItem(SelfPublishModel, models.Model):
+    serializer_class = TodoItemSerializer
+    todo_list = models.ForeignKey(TodoList)
+    done = models.BooleanField(default=False)
+    text = models.CharField(max_length=100)
