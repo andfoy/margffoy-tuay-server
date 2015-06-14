@@ -7,6 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = [
   url(r'^$', views.home_chat, name='home_chat'),
   url(r'^process/$', views.process_message, name='process_message'),
+  url(r'^leave/$', views.user_leave, name='user_leave'),
   url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'admin/login.html'}, name='login'),
   url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 ]

@@ -27,3 +27,18 @@ def process_message(request):
        return HttpResponse("200 OK")
     else:
        return HttpResponse("Not Allowed")
+
+def user_leave(request):
+    if request.method == 'POST':
+       r = redis.StrictRedis(host='localhost', port=6379, db=0)
+       user = request.user
+       username = 'Someone'
+       if user.is_authenticated():
+          username = user.username
+       r.set('user_logout', username)
+       #r.set('msg', data)
+       return HttpResponse("200 OK")
+    else:
+       return HttpResponse("Not Allowed")
+
+

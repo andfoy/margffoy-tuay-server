@@ -3,18 +3,25 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis = require('redis');
 var client = redis.createClient();
+var user_client = redis.createClient();
 client.subscribe('chat-channel');
 
 var i = 0
 
 io.on('connection', function(socket)
 {
-    //var user = ''
-    //client.get('user', function(err, reply) {
-    //      user = reply;
-    //});
-    io.emit('chat message', 'Welcome to the test Chat Room!');
+    var userL = ''
+    user_client.get('user', function(err, reply) {
+          userL = reply;
+          io.emit('chat message', userL+', welcome to the test Chat Room!');
+    });
+
+    socket.on('disconnect', function () 
+    {
+         io.emit('chat message', userL+', left the chat.');
+   });
 });
+
 
 client.on("message", function(channel, message) 
 {
