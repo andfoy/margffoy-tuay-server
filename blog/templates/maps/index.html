@@ -1,0 +1,85 @@
+
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans "Maps" %}{% endblock %}
+{% block title %}{% trans "Maps" %}{% endblock %}
+
+{% block breadcrumb_menu %}
+<li class="active">{% trans "Maps" %}</li>
+{% endblock %}
+
+{% block main %}
+     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      /*body { font: 13px Helvetica, Arial; }*/
+      /*form { background: #000; padding: 3px;} /*position: fixed; bottom: 0; width: 30%; }*/
+      form input { border: 0.5; padding: 5px; width: 90%;} /*margin-right: .5%; }*/
+      /*form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }*/
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+      #map { height: 400px; }
+    </style>
+
+    <script>
+    //$(doument).ready(function(){
+    //$('#chatDiv').animate({
+      //scrollTop: $('#chatDiv').get(0).scrollHeight}, 2000);
+     //});
+     function scrollDiv()
+     {
+        var objDiv = document.getElementById("chatDiv");
+        objDiv.scrollTop = objDiv.scrollHeight
+     }
+
+     function csrfSafeMethod(method) {
+         // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+     }
+
+     function getCookie(name) {
+       var cookieValue = null;
+       if (document.cookie && document.cookie != '') {
+           var cookies = document.cookie.split(';');
+           for (var i = 0; i < cookies.length; i++) {
+               var cookie = jQuery.trim(cookies[i]);
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                   cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                   break;
+               }
+           }
+       }
+       return cookieValue;
+     }
+
+    </script>
+
+    <div id="map"></div>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+     //$(document).ready(function() {
+      var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+      });
+
+      var map = L.map('map', {
+          scrollWheelZoom: true,
+          center: [40.7127837, -74.0059413],
+          zoom: 6
+      });
+
+      map.addLayer(layer);
+     //});
+
+    //$(window).bind('beforeunload', function(){
+          //return "Logout!";
+    //});
+
+    </script>
+
+{% endblock %}

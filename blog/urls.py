@@ -44,6 +44,7 @@ urlpatterns += patterns('',
 
     url("^$", direct_to_template, {"template": "index.html"}, name="home"),
     url(r'^chat/', include('chat.urls')),
+    url(r'^maps/', include('maps.urls')),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

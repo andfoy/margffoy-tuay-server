@@ -160,6 +160,8 @@ SHOP_OPTION_ADMIN_ORDER = (2, 1)
 # INSTALLED_APPS setting.
 USE_MODELTRANSLATION = False
 
+SITE_TITLE = 'The Neurotic'
+
 
 ########################
 # MAIN DJANGO SETTINGS #
@@ -175,7 +177,7 @@ MANAGERS = ADMINS
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['margffoy-tuay.com']
+ALLOWED_HOSTS = ['.margffoy-tuay.com']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -194,6 +196,7 @@ USE_TZ = True
 LANGUAGE_CODE = "en"
 
 LC_ALL = 'en_US.UTF8'
+DEFAULT_CHARSET = 'utf-8'
 
 # Supported languages
 _ = lambda s: s
@@ -327,6 +330,7 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     'swampdragon',
     "chat",
+    "maps",
     #"polls",
     # "mezzanine.accounts",
     # "mezzanine.mobile",
